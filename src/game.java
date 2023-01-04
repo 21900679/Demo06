@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class game extends JFrame implements ActionListener {
     gameboard board;
@@ -67,9 +68,28 @@ public class game extends JFrame implements ActionListener {
 
         setVisible(true);
     }
+    public void remove(){
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                board.stones[i][j] = 0;
+            }
+        }
+        board.stones[3][3] = board.stones[4][4] = -1;
+        board.stones[3][4] = board.stones[4][3] = 1;
+        board.color = true;
+        game.btn1 = Color.green;
+        game.btn2 = Color.black;
+        player1.setBackground(game.btn1);
+        player2.setBackground(game.btn2);
+        board.repaint();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("🏠")){
+            try{
+                MultichatClient.ClientSender.out.writeUTF("초기화");
+            }catch (IOException a){}
+
             for(int i = 0; i < 8; i++){
                 for(int j = 0; j < 8; j++){
                     board.stones[i][j] = 0;

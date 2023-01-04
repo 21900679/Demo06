@@ -73,6 +73,9 @@ public class MultichatClient {
             while(in!=null){
                 try{
                     String str = in.readUTF();
+                    if(str.equals("초기화")){
+                        myGame.remove();
+                    }
 //                    System.out.println("checking");
                     System.out.println(str);
                     myGame.board.readpaint(str);
