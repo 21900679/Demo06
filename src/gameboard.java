@@ -88,25 +88,29 @@ public class gameboard extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {    //마우스 버튼 누름
 
-        if(stones[e.getX() / 75][e.getY() / 75] == 3){
-            sendPoint = e.getX()/75 + "," + e.getY()/75;
-            try{
-                MultichatClient.ClientSender.out.writeUTF(sendPoint);
-            }catch (IOException a){}
+        if((MultichatClient.turn == 1 && !color) || (MultichatClient.turn == 0 && color))
+            return;
+        else {
+            if (stones[e.getX() / 75][e.getY() / 75] == 3) {
+                sendPoint = e.getX() / 75 + "," + e.getY() / 75;
+                try {
+                    MultichatClient.ClientSender.out.writeUTF(sendPoint);
+                } catch (IOException a) {
+                }
 
-            temp = game.btn1;
-            game.btn1 = game.btn2;
-            game.btn2 = temp;
-            game.player1.setBackground(game.btn1);
-            game.player2.setBackground(game.btn2);
-            color = !color;
-            if(color){
-                stones[e.getX() / 75][e.getY() / 75] = -1;
+                temp = game.btn1;
+                game.btn1 = game.btn2;
+                game.btn2 = temp;
+                game.player1.setBackground(game.btn1);
+                game.player2.setBackground(game.btn2);
+                color = !color;
+                if (color) {
+                    stones[e.getX() / 75][e.getY() / 75] = -1;
+                } else
+                    stones[e.getX() / 75][e.getY() / 75] = 1;
+                new change(stones, e.getX() / 75, e.getY() / 75);
+                repaint();
             }
-            else
-                stones[e.getX() / 75][e.getY() / 75] = 1;
-            new change(stones, e.getX() / 75, e.getY()/ 75);
-            repaint();
         }
     }
     public void readpaint(String sendPoint){

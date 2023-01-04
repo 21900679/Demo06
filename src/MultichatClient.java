@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class MultichatClient {
     game myGame;
+    static int turn;
     public static void main(String args[]){
         new login();
     }
@@ -73,6 +74,12 @@ public class MultichatClient {
             while(in!=null){
                 try{
                     String str = in.readUTF();
+                    if(str.equals("#Black")){
+                        turn = 1;
+                    }
+                    else if(str.equals("#White")){
+                        turn = 0;
+                    }
                     if(str.equals("초기화")){
                         myGame.remove();
                     }

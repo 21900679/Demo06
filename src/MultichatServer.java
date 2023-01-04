@@ -57,6 +57,13 @@ public class MultichatServer {
                 name = in.readUTF();
                 sendToAll("#"+name+"님이 들어오셨습니다.");
 
+                if(clients.size() == 0){
+                    out.writeUTF("#Black");
+                }
+                else if(clients.size() == 1){
+                    out.writeUTF("#White");
+                }
+
                 clients.put(name, out);
                 System.out.println("현재 서버접속자 수는 " + clients.size() + "입니다.");
                 while(in!=null) {
